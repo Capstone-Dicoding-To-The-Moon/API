@@ -1,24 +1,27 @@
 const {
   getAllPost,
   getPostWithCommentById,
-  getPostWithPopularCommentById,
   getAllPostWithOrderDate,
   getPostByCategories,
   updatePost,
   deletePostById,
   addPost,
+  updateUpVote,
+  updateDownVote,
+  getPostById,
 } = require('../handlers/postHandlers');
-const { routesHelper } = require('../routesHelper');
+const { routesHelper, routesHelperStream } = require('../helpers/routesHelper');
 
 const routesPost = [
   routesHelper('GET', '/posts', getAllPost),
+  routesHelper('GET', '/posts/{id}', getPostById),
   routesHelper('GET', '/postsDates', getAllPostWithOrderDate),
-  routesHelper('GET', '/posts/{id}', getPostWithCommentById),
-  routesHelper('GET', '/popular/{id}', getPostWithPopularCommentById),
   routesHelper('GET', '/postsCat/{id}', getPostByCategories),
-  routesHelper('PUT', '/posts', updatePost),
+  routesHelper('GET', '/postsCom/{id}', getPostWithCommentById),
+  routesHelperStream('PUT', '/posts', updatePost),
+  routesHelper('PUT', '/postsUpVote', updateUpVote),
+  routesHelper('PUT', '/postsDownVote', updateDownVote),
   routesHelper('DELETE', '/posts', deletePostById),
-  routesHelper('POST', '/posts', addPost),
-  //   routesHelper('POST', '/user', addUser),
+  routesHelperStream('POST', '/posts', addPost),
 ];
 module.exports = routesPost;

@@ -9,12 +9,16 @@ const init = async () => {
   const server = Hapi.server({
     port: 5000,
     host: 'localhost',
+    routes: {
+      cors: {
+        origin: ['*'],
+      },
+    },
   });
 
   await server.register(plugins);
 
   await server.start();
-  console.log(`Server berjalan pada ${server.info.uri}`);
 
   process.on('unhandledRejection', async (err) => {
     await server.app.prisma.$disconnect();

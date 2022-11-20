@@ -3,7 +3,7 @@ const {
   getKategoriPostById,
   addKategoriPost,
 } = require('../handlers/kategoriPostHandlers');
-const { routesHelper } = require('../routesHelper');
+const { routesHelper } = require('../helpers/routesHelper');
 
 const routesKategoriPost = [
   routesHelper('GET', '/kategori_post', getKategoriPost),

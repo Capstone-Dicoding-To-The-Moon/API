@@ -3,7 +3,7 @@ const {
   getKategoriForumById,
   addKategoriForum,
 } = require('../handlers/kategoriForumHandlers');
-const { routesHelper } = require('../routesHelper');
+const { routesHelper } = require('../helpers/routesHelper');
 
 const routesKategoriForum = [
   routesHelper('GET', '/kategori_forum', getKategoriForum),

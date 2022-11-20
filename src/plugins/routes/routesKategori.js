@@ -5,7 +5,7 @@ const {
   updateKategoriById,
   deleteKategoriById,
 } = require('../handlers/kategoriHandlers');
-const { routesHelper } = require('../routesHelper');
+const { routesHelper } = require('../helpers/routesHelper');
 
 const routesKategori = [
   routesHelper('GET', '/categories', getAllKategori),

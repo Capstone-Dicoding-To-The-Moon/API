@@ -10,6 +10,7 @@ const postPlugin = require('./post');
 const prismaPlugin = require('./prisma');
 const rolePlugin = require('./role');
 const userPlugin = require('./user');
+const inert = require('@hapi/inert');
 
 const plugins = [
   prismaPlugin,
@@ -24,6 +25,7 @@ const plugins = [
   komentarForumPlugin, //komentar_forum
   komentarPostPlugin, //komentar_post
   logPlugin, //log
+  inert, // Agar bisa load image
 ];
 
 module.exports = plugins;

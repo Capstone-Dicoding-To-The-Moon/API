@@ -5,7 +5,7 @@ const {
   deleteKomentarPost,
   updateKomentarPost,
 } = require('../handlers/komentarPostHandlers');
-const { routesHelper } = require('../routesHelper');
+const { routesHelper } = require('../helpers/routesHelper');
 
 const routesKomentarPost = [
   routesHelper('GET', '/komentar_post', getKomentarPost),

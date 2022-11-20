@@ -1,5 +1,5 @@
 const { getRole, getRoleById, addRole } = require('../handlers/roleHandlers');
-const { routesHelper } = require('../routesHelper');
+const { routesHelper } = require('../helpers/routesHelper');
 
 const routesRole = [
   routesHelper('GET', '/roles', getRole),
