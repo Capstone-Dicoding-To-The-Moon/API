@@ -14,6 +14,7 @@ const init = async () => {
   await server.register(plugins);
 
   await server.start();
+  console.log(`Server berjalan pada ${server.info.uri}`);
 
   process.on('unhandledRejection', async (err) => {
     await server.app.prisma.$disconnect();
