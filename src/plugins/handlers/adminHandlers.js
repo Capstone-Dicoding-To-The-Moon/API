@@ -7,11 +7,16 @@ const {
 
 const getAllAdmin = async (request, h) => {
   const { prisma } = request.server.app;
-  const admin = await prisma.user.findMany({
-    where: {
-      roleId: 1,
-    },
-  });
+  let admin;
+  try{
+    admin = await prisma.user.findMany({
+      where: {
+        roleId: 1,
+      },
+    });
+  } catch (e) {
+    console.log(e)
+  }
   return responseHelper(h, 'success', 'Data berhasil didapatkan', 200, admin);
 };
 
