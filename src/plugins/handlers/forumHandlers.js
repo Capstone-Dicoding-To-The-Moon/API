@@ -195,6 +195,35 @@ const getForumWithDiscussionById = async (request, h) => {
   return response200Handler(h, 'get', forumWithKomentar[0]);
 };
 
+const getSearchForumByTitle = async (request, h) => {
+  const { prisma } = request.server.app;
+  const { title } = request.params;
+
+  if (title === null) {
+    return response400Handler(h, 'get', 'forum', 'title, tidak boleh null');
+  }
+
+  const forum = await prisma.forum.findMany({
+    where: {
+      title: {
+        contains: title,
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
+  return response200Handler(h, 'get', forum);
+};
+
 const updateForum = async (request, h) => {
   const { userId: uId } = request.auth.credentials;
   const { prisma } = request.server.app;
@@ -400,6 +429,7 @@ module.exports = {
   getAllForumWithOrderDate,
   getForumByCategories,
   getForumWithDiscussionById,
+  getSearchForumByTitle,
   updateForum,
   updateUpVote,
   updateDownVote,

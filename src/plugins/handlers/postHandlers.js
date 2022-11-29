@@ -192,6 +192,35 @@ const getPostByCategories = async (request, h) => {
   return response200Handler(h, 'get', postByCategories);
 };
 
+const getSearchPostByTitle = async (request, h) => {
+  const { prisma } = request.server.app;
+  const { title } = request.params;
+
+  if (title === null) {
+    return response400Handler(h, 'get', 'post', 'title, tidak boleh null');
+  }
+
+  const posts = await prisma.post.findMany({
+    where: {
+      title: {
+        contains: title,
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
+  return response200Handler(h, 'get', posts);
+};
+
 const updatePost = async (request, h) => {
   const { userId: uId } = request.auth.credentials;
   const { prisma } = request.server.app;
@@ -407,6 +436,7 @@ module.exports = {
   getPostWithCommentById,
   getAllPostWithOrderDate,
   getPostByCategories,
+  getSearchPostByTitle,
   updatePost,
   updateUpVote,
   updateDownVote,
