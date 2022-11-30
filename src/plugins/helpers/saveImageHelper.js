@@ -18,14 +18,14 @@ const generateName = (length) => {
 };
 
 const validateImageExtension = (image) => {
-  const filename = image.hapi.filename;
-
-  if (!filename) {
+  if (!image) {
     /* Kalo gaada file yang diupload dia true
        karena bakalan dikasih sama defaultnya.
     */
     return true;
   }
+
+  const filename = image.hapi.filename;
 
   const ext = filename.split('.').slice(-1).join('.');
   const validExt = ['png', 'jpg', 'jpeg'];

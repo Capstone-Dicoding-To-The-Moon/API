@@ -6,18 +6,6 @@ BigInt.prototype.toJSON = function () {
   return parseInt(this);
 };
 
-const validate = async (request, username, password) => {
-  const user = users[username];
-  if (!user) {
-    return { credentials: null, isValid: false };
-  }
-
-  const isValid = password === user.password;
-  const credentials = { id: user.id, name: user.name };
-
-  return { isValid, credentials };
-};
-
 const init = async () => {
   const server = Hapi.server({
     port: 5000,
@@ -28,10 +16,6 @@ const init = async () => {
       },
     },
   });
-
-  // await server.register(require('@hapi/basic'));
-
-  // server.auth.strategy('simple', 'basic', { validate });
 
   await server.register(Jwt);
 

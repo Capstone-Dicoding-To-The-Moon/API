@@ -1,5 +1,9 @@
 const { getToken } = require('../helpers/authHelper');
 const {
+  encryptMD5CipherWithBcrypt,
+  decryptCipher,
+} = require('../helpers/encryptHelper');
+const {
   response200Handler,
   response201Handler,
   response400Handler,
@@ -62,7 +66,7 @@ const addAdmin = async (request, h) => {
     return requesterUser.dataError;
   }
 
-  const { name, email, image } = request.payload;
+  const { name, email, password, image } = request.payload;
 
   let dataImage;
 
@@ -72,6 +76,10 @@ const addAdmin = async (request, h) => {
 
   if (!email) {
     return response400Handler(h, 'add', 'admin', 'email');
+  }
+
+  if (!password) {
+    return response400Handler(h, 'add', 'admin', 'password');
   }
 
   const check = await prisma.user.findUnique({
@@ -92,10 +100,13 @@ const addAdmin = async (request, h) => {
     return response400HandlerImage(h);
   }
 
+  const cipherPassword = encryptMD5CipherWithBcrypt(password);
+
   const admin = await prisma.user.create({
     data: {
       name,
       email,
+      password: cipherPassword,
       image_large: dataImage?.data.large,
       image_small: dataImage?.data.small,
       roleId: 1,
@@ -214,6 +225,7 @@ const adminLogin = async (request, h) => {
   }
 
   const admin = await prisma.user.findUnique({ where: { email } });
+
   if (!admin) {
     return response404Handler(h, 'get', 'admin', 'Email');
   }
@@ -222,8 +234,14 @@ const adminLogin = async (request, h) => {
     return response401Handler(h, 'role');
   }
 
-  if (admin.password !== password) {
-    return response400Handler(h, 'get', 'admin', 'password dengan benar');
+  if (!decryptCipher(password, admin.password)) {
+    return response400Handler(
+      h,
+      'get',
+      'admin',
+      null,
+      'Mohon isi password admin dengan benar',
+    );
   }
 
   const token = getToken(admin.id);
