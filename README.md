@@ -1,8 +1,6 @@
 # API
 Repository yang berisi tentang kebutuhan untuk implementasi API dari aplikasi.
 
-_src\plugins\routes\routesAdmin.js_
-
 ### **Admin**
 #### GET
 
@@ -10,27 +8,27 @@ _src\plugins\routes\routesAdmin.js_
   GET /admin
 ```
 
-| Arguments | Output             |
-| :-------- | :------------------|
-| `()`      | Semua daftar admin |
+| Arguments | Output              |
+| :-------- | :------------------ |
+| `()`      | Semua daftar admin  |
 
 
 ```http
   GET /admin/{id}
 ```
 
-| Arguments | Type     | Output                            |
-| :-------- | :------- | :-------------------------------- |
-| `()`      | `string` | Semua daftar admin berdasarkan ID |
+| Params | Type     | Output               |
+| :----- | :------- | :------------------- |
+| `id`   | `string` | Admin berdasarkan ID |
 
 
 ```http
   GET /admin/image/{name}
 ```
 
-| Arguments | Type     | Output                     |
-| :-------- | :------- | :--------------------------|
-| `()`      | `string` | Foto profile dari ID admin |
+| Params   | Type     | Output                   |
+| :------- | :------- | :----------------------- |
+| `name`   | `string` | Foto profile dari admin  |
 
 
 #### PUT
@@ -39,13 +37,12 @@ _src\plugins\routes\routesAdmin.js_
   PUT /admin
 ```
 
-| Arguments | Type     | Output                        |
-| :-------- | :------- | :-----------------------------|
-| `name`    | `string` | Admin berhasil diubah datanya |
-| `email`   | `string` | Admin berhasil diubah datanya |
-| `oldImage`| `string` | Admin berhasil diubah datanya |
-| `newImage`| `files`  | Admin berhasil diubah datanya |
-| `role`    | `string` | Admin berhasil diubah datanya |
+| Payloads  | Type     | Output                         |
+| :-------- | :------- | :----------------------------- |
+| `name`    | `string` | Admin berhasil diubah datanya  |
+| `email`   | `string` |                                |
+| `oldImage`| `string` |                                |
+| `newImage`| `files`  |                                |
 
 
 #### DELETE
@@ -54,10 +51,9 @@ _src\plugins\routes\routesAdmin.js_
   DELETE /admin
 ```
 
-| Arguments | Type     | Output                 |
-| :-------- | :------- | :----------------------|
-| `email`   | `string` | Admin berhasil dihapus |
-| `role`    | `string` | Admin berhasil dihapus |
+| Payloads  | Type     | Output                  |
+| :-------- | :------- | :---------------------- |
+| `email`   | `string` | Admin berhasil dihapus  |
 
 
 #### POST
@@ -66,12 +62,21 @@ _src\plugins\routes\routesAdmin.js_
   POST /admin
 ```
 
-| Arguments | Type     | Output                |
-| :-------- | :------- | :---------------------|
-| `name`    | `string` | Admin berhasil dibuat |
-| `email`   | `string` | Admin berhasil dibuat |
-| `image`   | `files`  | Admin berhasil dibuat |
-| `role`    | `string` | Admin berhasil dibuat |
+| Payloads  | Type     | Output                 |
+| :-------- | :------- | :--------------------- |
+| `name`    | `string` | Admin berhasil dibuat  |
+| `email`   | `string` |                        |
+| `image`   | `files`  |                        |
+
+
+```http
+  POST /admin-login
+```
+
+| Payloads     | Type     | Output                 |
+| :----------- | :------- | :--------------------- |
+| `name`       | `string` | Admin berhasil login   |
+| `password`   | `string` |                        |
 
 
 ### **Forum**
@@ -81,44 +86,53 @@ _src\plugins\routes\routesAdmin.js_
   GET /forum
 ```
 
-| Arguments | Output           |
-| :-------- | :----------------|
-| `()`      | Semua data forum |
+| Arguments | Output            |
+| :-------- | :---------------- |
+| `()`      | Semua data forum  |
 
 
 ```http
   GET /forum/{id}
 ```
 
-| Arguments | Type     | Output                            |
-| :-------- | :------- | :-------------------------------- |
-| `()`      | `string` | Semua daftar forum berdasarkan ID |
+| Params    | Type     | Output               |
+| :-------- | :------- | :------------------- |
+| `id`      | `string` | Forum berdasarkan ID |
 
 
 ```http
   GET /forumDates
 ```
 
-| Arguments | Output                              |
-| :-------- | :-----------------------------------|
-| `()`      | Semua data forum berdasarkan tanggal|
+| Arguments | Output                               |
+| :-------- | :----------------------------------- |
+| `()`      | Semua data forum berdasarkan tanggal |
 
 ```http
   GET /forumCat/{id}
 ```
 
-| Arguments | Type     | Output                                 |
-| :-------- | :------- | :--------------------------------------|
-| `()`      | `string` | Semua daftar forum berdasarkan kategori|
+| Params    | Type     | Output                                     |
+| :-------- | :------- | :----------------------------------------- |
+| `id`      | `string` | Semua daftar forum berdasarkan id kategori |
 
 
 ```http
   GET /forumDis/{id}
 ```
 
-| Arguments | Type     | Output                                |
-| :-------- | :------- | :-------------------------------------|
-| `()`      | `string` | Semua daftar forum berdasarkan diskusi|
+| Params    | Type     | Output                                    |
+| :-------- | :------- | :---------------------------------------- |
+| `id`      | `string` | Semua daftar forum berdasarkan id diskusi |
+
+
+```http
+  GET /search-forum/{title}
+```
+
+| Params    | Type     | Output                         |
+| :-------- | :------- | :----------------------------- |
+| `title`   | `string` | Daftar forum berdasarkan title |
 
 
 #### PUT
@@ -126,31 +140,30 @@ _src\plugins\routes\routesAdmin.js_
   PUT /forum
 ```
 
-| Arguments | Type     | Output                        |
-| :-------- | :------- | :-----------------------------|
+| Payloads  | Type     | Output                        |
+| :-------- | :------- | :---------------------------- |
 | `id`      | `string` | Forum berhasil diubah datanya |
-| `tittle`  | `string` | Forum berhasil diubah datanya |
-| `authorId`| `string` | Forum berhasil diubah datanya |
-| `oldImage`| `string` | Forum berhasil diubah datanya |
-| `newImage`| `files`  | Forum berhasil diubah datanya |
+| `title`   | `string` |                               |
+| `oldImage`| `string` |                               |
+| `newImage`| `files`  |                               |
 
 
 ```http
   PUT /forumUpVote
 ```
 
-| Arguments | Type     | Output                   |
-| :-------- | :------- | :------------------------|
-| `()`      | `string` | Memperbarui up vote forum|
+| Payloads  | Type     | Output                                         |
+| :-------- | :------- | :--------------------------------------------- |
+| `id`      | `string` | Memperbarui up vote forum berdasarkan id forum |
 
 
 ```http
   PUT /forumDownVote
 ```
 
-| Arguments | Type     | Output                   |
-| :-------- | :------- | :------------------------|
-| `()`      | `string` | Memperbarui up vote forum|
+| Payloads  | Type     | Output                                         |
+| :-------- | :------- | :--------------------------------------------- |
+| `id`      | `string` | Memperbarui up vote forum berdasarkan id forum |
 
 
 #### DELETE
@@ -158,9 +171,9 @@ _src\plugins\routes\routesAdmin.js_
   DELETE /forum
 ```
 
-| Arguments | Type     | Output                |
-| :-------- | :------- | :---------------------|
-| `()`      | `string` | Forum berhasil dihapus|
+| Payloads  | Type     | Output                 |
+| :-------- | :------- | :--------------------- |
+| `id`      | `string` | Forum berhasil dihapus |
 
 
 #### POST
@@ -168,11 +181,10 @@ _src\plugins\routes\routesAdmin.js_
   POST /forum
 ```
 
-| Arguments | Type     | Output                        |
-| :-------- | :------- | :-----------------------------|
-| `tittle`  | `string` | Forum berhasil diubah datanya |
-| `authorId`| `string` | Forum berhasil diubah datanya |
-| `image`   | `string` | Forum berhasil diubah datanya |
+| Payloads  | Type     | Output              |
+| :-------- | :------- | :------------------ |
+| `title`   | `string` | Forum berhasil buat |
+| `image`   | `string` |                     |
 
 
 ### **Kategori**
@@ -182,18 +194,18 @@ _src\plugins\routes\routesAdmin.js_
   GET /categories
 ```
 
-| Arguments | Output               |
-| :-------- | :--------------------|
-| `()`      | Semua daftar kategori|
+| Arguments | Output                |
+| :-------- | :-------------------- |
+| `()`      | Semua daftar kategori |
 
 
 ```http
   GET /categories/{id}
 ```
 
-| Arguments | Type     | Output                               |
-| :-------- | :------- | :------------------------------------|
-| `()`      | `string` | Semua daftar kategori berdasarkan ID |
+| Params    | Type     | Output                  |
+| :-------- | :------- | :---------------------- |
+| `id`      | `string` | Kategori berdasarkan ID |
 
 
 #### PUT
@@ -201,10 +213,10 @@ _src\plugins\routes\routesAdmin.js_
   PUT /categories
 ```
 
-| Arguments | Type     | Output                           |
-| :-------- | :------- | :--------------------------------|
+| Payloads  | Type     | Output                           |
+| :-------- | :------- | :------------------------------- |
 | `name`    | `string` | Kategori berhasil diubah datanya |
-| `tittle`  | `string` | Kategori berhasil diubah datanya |
+| `title`   | `string` |                                  |
 
 
 #### DELETE
@@ -212,9 +224,9 @@ _src\plugins\routes\routesAdmin.js_
   DELETE /categories
 ```
 
-| Arguments | Type     | Output                   |
-| :-------- | :------- | :------------------------|
-| `()`      | `string` | Kategori berhasil dihapus|
+| Payloads  | Type     | Output                    |
+| :-------- | :------- | :------------------------ |
+| `id`      | `string` | Kategori berhasil dihapus |
 
 
 #### POST
@@ -222,11 +234,9 @@ _src\plugins\routes\routesAdmin.js_
   POST /categories
 ```
 
-| Arguments | Type     | Output                  |
-| :-------- | :------- | :-----------------------|
-| `tittle`  | `string` | Kategori berhasil dibuat|
-| `authorId`| `string` | Kategori berhasil dibuat|
-| `updateBy`| `string` | Kategori berhasil dibuat|
+| Payloads  | Type     | Output                   |
+| :-------- | :------- | :----------------------- |
+| `title`   | `string` | Kategori berhasil dibuat |
 
 
 ### **Kategori Forum**
@@ -236,18 +246,18 @@ _src\plugins\routes\routesAdmin.js_
   GET /kategori_forum
 ```
 
-| Arguments | Output                     |
-| :-------- | :--------------------------|
-| `()`      | Semua daftar kategori forum|
+| Arguments | Output                      |
+| :-------- | :-------------------------- |
+| `()`      | Semua daftar kategori forum |
 
 
 ```http
   GET /kategori_forum/{id}
 ```
 
-| Arguments | Type     | Output                                     |
-| :-------- | :------- | :------------------------------------------|
-| `()`      | `string` | Semua daftar kategori forum berdasarkan ID |
+| Params | Type     | Output                        |
+| :----- | :------- | :---------------------------- |
+| `id`   | `string` | Kategori forum berdasarkan ID |
 
 
 #### POST
@@ -255,10 +265,10 @@ _src\plugins\routes\routesAdmin.js_
   POST /kategori_forum
 ```
 
-| Arguments   | Type     | Output                        |
-| :-----------| :------- | :-----------------------------|
-| `forumId`   | `string` | Kategori forum berhasil dibuat|
-| `kategoriId`| `string` | Kategori forum berhasil dibuat|
+| Payloads    | Type     | Output                         |
+| :-----------| :------- | :----------------------------- |
+| `forumId`   | `string` | Kategori forum berhasil dibuat |
+| `kategoriId`| `string` |                                |
 
 
 ### **Kategori Post**
@@ -268,18 +278,18 @@ _src\plugins\routes\routesAdmin.js_
   GET /kategori_post
 ```
 
-| Arguments | Output                    |
-| :-------- | :-------------------------|
-| `()`      | Semua daftar kategori post|
+| Arguments | Output                     |
+| :-------- | :------------------------- |
+| `()`      | Semua daftar kategori post |
 
 
 ```http
   GET /kategori_post/{id}
 ```
 
-| Arguments | Type     | Output                                    |
-| :-------- | :------- | :-----------------------------------------|
-| `()`      | `string` | Semua daftar kategori post berdasarkan ID |
+| Params | Type     | Output                       |
+| :----- | :------- | :--------------------------- |
+| `id`   | `string` | Kategori post berdasarkan ID |
 
 
 #### POST
@@ -287,10 +297,10 @@ _src\plugins\routes\routesAdmin.js_
   POST /kategori_post
 ```
 
-| Arguments   | Type     | Output                       |
-| :-----------| :------- | :----------------------------|
-| `postId`    | `string` | Kategori post berhasil dibuat|
-| `kategoriId`| `string` | Kategori post berhasil dibuat|
+| Payloads    | Type     | Output                        |
+| :-----------| :------- | :---------------------------- |
+| `postId`    | `string` | Kategori post berhasil dibuat |
+| `kategoriId`| `string` |                               |
 
 
 ### **Komentar Forum**
@@ -300,27 +310,27 @@ _src\plugins\routes\routesAdmin.js_
   GET /komentar_forum
 ```
 
-| Arguments | Output                     |
-| :-------- | :--------------------------|
-| `()`      | Semua daftar komentar forum|
+| Arguments | Output                      |
+| :-------- | :-------------------------- |
+| `()`      | Semua daftar komentar forum |
 
 
 ```http
   GET /komentar_forum/{id}
 ```
 
-| Arguments | Type     | Output                                     |
-| :-------- | :------- | :------------------------------------------|
-| `()`      | `string` | Semua daftar komentar forum berdasarkan ID |
+| Params | Type     | Output                        |
+| :----- | :------- | :---------------------------- |
+| `id`   | `string` | Komentar forum berdasarkan ID |
 
 #### PUT
 ```http
   PUT /komentar_forum
 ```
 
-| Arguments   | Type     | Output                        |
-| :-----------| :------- | :-----------------------------|
-| `content`   | `string` | Komentar forum berhasil dibuat|
+| Payloads    | Type     | Output                         |
+| :-----------| :------- | :----------------------------- |
+| `content`   | `string` | Komentar forum berhasil diubah |
 
 
 #### DELETE
@@ -328,9 +338,9 @@ _src\plugins\routes\routesAdmin.js_
   DELETE /komentar_forum
 ```
 
-| Arguments | Type     | Output                          |
-| :-------- | :------- | :-------------------------------|
-| `()`      | `string` | Komentar forum berhasil dihapus |
+| Payloads  | Type     | Output                          |
+| :-------- | :------- | :------------------------------ |
+| `id`      | `string` | Komentar forum berhasil dihapus |
 
 
 #### POST
@@ -338,11 +348,10 @@ _src\plugins\routes\routesAdmin.js_
   POST /komentar_forum
 ```
 
-| Arguments | Type     | Output                              |
-| :-------- | :------- | :-----------------------------------|
+| Payloads  | Type     | Output                              |
+| :-------- | :------- | :---------------------------------- |
 | `content` | `string` | Komentar forum berhasil ditambahkan |
-| `authorId`| `string` | Komentar forum berhasil ditambahkan |
-| `forumId` | `string` | Komentar forum berhasil ditambahkan |
+| `forumId` | `string` |                                     |
 
 
 ### **Komentar Post**
@@ -352,27 +361,28 @@ _src\plugins\routes\routesAdmin.js_
   GET /komentar_post
 ```
 
-| Arguments | Output                  |
-| :-------- | :-----------------------|
-| `()`      | Data berhasil didapatkan|
+| Arguments | Output                   |
+| :-------- | :----------------------- |
+| `()`      | Data berhasil didapatkan |
 
 
 ```http
   GET /komentar_post/{id}
 ```
 
-| Arguments | Type     | Output                                  |
-| :-------- | :------- | :---------------------------------------|
-| `()`      | `string` | Data berhasil didapatkan berdasarkan ID |
+| Params | Type     | Output                                  |
+| :----- | :------- | :-------------------------------------- |
+| `id`   | `string` | Data berhasil didapatkan berdasarkan ID |
+
 
 #### PUT
 ```http
   PUT /komentar_post
 ```
 
-| Arguments   | Type     | Output                       |
-| :-----------| :------- | :----------------------------|
-| `content`   | `string` | Komentar post berhasil dibuat|
+| Payloads    | Type     | Output                        |
+| :-----------| :------- | :---------------------------- |
+| `content`   | `string` | Komentar post berhasil diubah |
 
 
 #### DELETE
@@ -380,9 +390,9 @@ _src\plugins\routes\routesAdmin.js_
   DELETE /komentar_post
 ```
 
-| Arguments | Type     | Output                         |
-| :-------- | :------- | :------------------------------|
-| `()`      | `string` | Komentar post berhasil dihapus |
+| Payloads  | Type     | Output                         |
+| :-------- | :------- | :----------------------------- |
+| `id`      | `string` | Komentar post berhasil dihapus |
 
 
 #### POST
@@ -390,11 +400,10 @@ _src\plugins\routes\routesAdmin.js_
   POST /komentar_post
 ```
 
-| Arguments | Type     | Output                              |
-| :-------- | :------- | :-----------------------------------|
+| Payloads  | Type     | Output                              |
+| :-------- | :------- | :---------------------------------- |
 | `content` | `string` | Komentar forum berhasil ditambahkan |
-| `authorId`| `string` | Komentar forum berhasil ditambahkan |
-| `forumId` | `string` | Komentar forum berhasil ditambahkan |
+| `forumId` | `string` |                                     |
 
 
 ### **Log**
@@ -404,9 +413,9 @@ _src\plugins\routes\routesAdmin.js_
   GET /log
 ```
 
-| Arguments | Output          |
-| :-------- | :---------------|
-| `()`      | Semua daftar log|
+| Arguments | Output           |
+| :-------- | :--------------- |
+| `()`      | Semua daftar log |
 
 
 ### **Post**
@@ -416,74 +425,83 @@ _src\plugins\routes\routesAdmin.js_
   GET /posts
 ```
 
-| Arguments | Output           |
-| :-------- | :----------------|
-| `()`      | Semua daftar post|
+| Arguments | Output            |
+| :-------- | :---------------- |
+| `()`      | Semua daftar post |
 
 
 ```http
   GET /posts/{id}
 ```
 
-| Arguments | Type     | Output                           |
-| :-------- | :------- | :--------------------------------|
-| `()`      | `string` | Semua daftar post berdasarkan ID |
+| Params | Type     | Output              |
+| :----- | :------- | :------------------ |
+| `id`   | `string` | Post berdasarkan ID |
 
 
 ```http
   GET /postsDates
 ```
-| Arguments | Output                               |
-| :-------- | :------------------------------------|
-| `()`      | Semua daftar post berdasarkan tanggal|
+| Arguments | Output                                |
+| :-------- | :------------------------------------ |
+| `()`      | Semua daftar post berdasarkan tanggal |
 
 
 ```http
   GET /postsCat/{id}
 ```
-| Arguments | Output                                |
-| :-------- | :-------------------------------------|
-| `()`      | Semua daftar post berdasarkan kategori|
+| Params | Output                                    |
+| :----- | :---------------------------------------- |
+| `id`   | Semua daftar post berdasarkan id kategori |
 
 
 ```http
   GET /postsCom/{id}
 ```
-| Arguments | Type     | Output                                        |
-| :-------- | :------- | :---------------------------------------------|
-| `()`      | `string` | Semua daftar post berdasarkan komentar dari ID|
+| Params | Type     | Output                                         |
+| :----- | :------- | :--------------------------------------------- |
+| `id`   | `string` | Semua daftar post berdasarkan komentar dari ID |
+
+
+```http
+  GET /search-post/{title}
+```
+
+| Params    | Type     | Output                        |
+| :-------- | :------- | :---------------------------- |
+| `title`   | `string` | Daftar post berdasarkan title |
+
 
 #### PUT 
 ```http
   PUT /postsCat
 ```
 
-| Arguments | Type     | Output                        |
-| :-------- | :------- | :-----------------------------|
-| `id`      | `string` | Berhasil memperbarui data post|
-| `tittle`  | `string` | Berhasil memperbarui data post|
-| `content` | `string` | Berhasil memperbarui data post|
-| `authorId`| `string` | Berhasil memperbarui data post|
-| `oldImage`| `string` | Berhasil memperbarui data post|
-| `newImage`| `files`  | Berhasil memperbarui data post|
+| Payloads  | Type     | Output                         |
+| :-------- | :------- | :----------------------------- |
+| `id`      | `string` | Berhasil memperbarui data post |
+| `title`   | `string` |                                |
+| `content` | `string` |                                |
+| `oldImage`| `string` |                                |
+| `newImage`| `files`  |                                |
 
 
 ```http
   PUT /postsUpVote
 ```
 
-| Arguments | Type     | Output                           |
-| :-------- | :------- | :--------------------------------|
-| `()`      | `string` | Berhasil memperbarui up vote post|
+| Payloads | Type     | Output                            |
+| :------- | :------- | :-------------------------------- |
+| `id`     | `string` | Berhasil memperbarui up vote post |
 
 
 ```http
   PUT /postsDownVote
 ```
 
-| Arguments | Type     | Output                             |
-| :-------- | :------- | :----------------------------------|
-| `()`      | `string` | Berhasil memperbarui down vote post|
+| Payloads | Type     | Output                              |
+| :------- | :------- | :---------------------------------- |
+| `id`     | `string` | Berhasil memperbarui down vote post |
 
 
 #### DELETE
@@ -491,9 +509,9 @@ _src\plugins\routes\routesAdmin.js_
   DELETE /posts
 ```
 
-| Arguments | Type     | Output                      |
-| :-------- | :------- | :---------------------------|
-| `()`      | `string` | Berhasil menghapus data post|
+| Payloads | Type     | Output                       |
+| :------- | :------- | :--------------------------- |
+| `id`     | `string` | Berhasil menghapus data post |
 
 
 #### POST
@@ -501,12 +519,11 @@ _src\plugins\routes\routesAdmin.js_
   POST /posts
 ```
 
-| Arguments | Type     | Output                   |
-| :-------- | :------- | :------------------------|
-| `tittle`  | `string` | Post berhasil ditambahkan|
-| `content` | `string` | Post berhasil ditambahkan|
-| `image`   | `files`  | Post berhasil ditambahkan|
-| `authorId`| `string` | Post berhasil ditambahkan|
+| Payloads  | Type     | Output                    |
+| :-------  | :------- | :------------------------ |
+| `title`   | `string` | Post berhasil ditambahkan |
+| `content` | `string` |                           |
+| `image`   | `files`  |                           |
 
 
 ### **Role**
@@ -516,18 +533,18 @@ _src\plugins\routes\routesAdmin.js_
   GET /roles
 ```
 
-| Arguments | Output           |
-| :-------- | :----------------|
-| `()`      | Semua daftar role|
+| Arguments | Output            |
+| :-------- | :---------------- |
+| `()`      | Semua daftar role |
 
 
 ```http
   GET /roles/{id}
 ```
 
-| Arguments | Type     | Output                           |
-| :-------- | :------- | :--------------------------------|
-| `()`      | `string` | Semua daftar role berdasarkan ID |
+| Params | Type     | Output              |
+| :----- | :------- | :------------------ |
+| `id`   | `string` | Role berdasarkan ID |
 
 
 #### POST
@@ -535,9 +552,9 @@ _src\plugins\routes\routesAdmin.js_
   POST /roles
 ```
 
-| Arguments | Type     | Output                    |
-| :-------- | :------- | :-------------------------|
-| `role`    | `string` | Role berhasil ditambahkan |
+| Payloads | Type     | Output                    |
+| :------- | :------- | :------------------------ |
+| `role`   | `string` | Role berhasil ditambahkan |
 
 
 ### **User**
@@ -546,27 +563,27 @@ _src\plugins\routes\routesAdmin.js_
   GET /user
 ```
 
-| Arguments | Output           |
-| :-------- | :----------------|
-| `()`      | Semua daftar user|
+| Arguments | Output            |
+| :-------- | :---------------- |
+| `()`      | Semua daftar user |
 
 
 ```http
   GET /user/{id}
 ```
 
-| Arguments | Type     | Output                           |
-| :-------- | :------- | :--------------------------------|
-| `()`      | `string` | Semua daftar user berdasarkan ID |
+| Params | Type     | Output              |
+| :----- | :------- | :------------------ |
+| `id`   | `string` | User berdasarkan ID |
 
 
 ```http
   GET /user/image/{name}
 ```
 
-| Arguments | Type     | Output                     |
-| :-------- | :------- | :--------------------------|
-| `name`    | `file`   | Berhasil mendapatkan image |
+| Params | Type     | Output                     |
+| :----- | :------- | :------------------------- |
+| `name` | `file`   | Berhasil mendapatkan image |
 
 
 #### PUT
@@ -574,12 +591,12 @@ _src\plugins\routes\routesAdmin.js_
   PUT /user
 ```
 
-| Arguments | Type     | Output                  |
-| :-------- | :------- | :-----------------------|
-| `name`    | `string` | User berhasil diperbarui|
-| `email`   | `string` | User berhasil diperbarui|
-| `oldImage`| `string` | User berhasil diperbarui|
-| `newImage`| `files`  | User berhasil diperbarui|
+| Payloads  | Type     | Output                   |
+| :-------- | :------- | :----------------------- |
+| `name`    | `string` | User berhasil diperbarui |
+| `email`   | `string` |                          |
+| `oldImage`| `string` |                          |
+| `newImage`| `files`  |                          |
 
 
 #### DELETE
@@ -587,9 +604,9 @@ _src\plugins\routes\routesAdmin.js_
   DELETE /user
 ```
 
-| Arguments | Type     | Output                      |
-| :-------- | :------- | :---------------------------|
-| `email`   | `string` | Berhasil menghapus data user|
+| Payloads | Type     | Output                       |
+| :------  | :------- | :--------------------------- |
+| `email`  | `string` | Berhasil menghapus data user |
 
 
 #### POST
@@ -597,8 +614,18 @@ _src\plugins\routes\routesAdmin.js_
   POST /user
 ```
 
-| Arguments | Type     | Output                   |
-| :-------- | :------- | :------------------------|
-| `name`    | `string` | User berhasil ditambahkan|
-| `email`   | `string` | User berhasil ditambahkan|
-| `image`   | `files`  | User berhasil ditambahkan|
+| Payloads  | Type     | Output                    |
+| :-------- | :------- | :------------------------ |
+| `name`    | `string` | User berhasil ditambahkan |
+| `email`   | `string` |                           |
+| `image`   | `files`  |                           |
+
+
+```http
+  POST /user-login
+```
+
+| Payloads     | Type     | Output                 |
+| :----------- | :------- | :--------------------- |
+| `name`       | `string` | User berhasil login    |
+| `password`   | `string` |                        |
