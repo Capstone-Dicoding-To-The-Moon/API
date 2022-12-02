@@ -62,11 +62,12 @@ Repository yang berisi tentang kebutuhan untuk implementasi API dari aplikasi.
   POST /admin
 ```
 
-| Payloads  | Type     | Output                 |
-| :-------- | :------- | :--------------------- |
-| `name`    | `string` | Admin berhasil dibuat  |
-| `email`   | `string` |                        |
-| `image`   | `files`  |                        |
+| Payloads      | Type     | Output                 |
+| :------------ | :------- | :--------------------- |
+| `name`        | `string` | Admin berhasil dibuat  |
+| `email`       | `string` |                        |
+| `password`    | `string` |                        |
+| `image`       | `files`  |                        |
 
 
 ```http
@@ -614,11 +615,12 @@ Repository yang berisi tentang kebutuhan untuk implementasi API dari aplikasi.
   POST /user
 ```
 
-| Payloads  | Type     | Output                    |
-| :-------- | :------- | :------------------------ |
-| `name`    | `string` | User berhasil ditambahkan |
-| `email`   | `string` |                           |
-| `image`   | `files`  |                           |
+| Payloads      | Type     | Output                    |
+| :------------ | :------- | :------------------------ |
+| `name`        | `string` | User berhasil ditambahkan |
+| `email`       | `string` |                           |
+| `password`    | `string` |                           |
+| `image`       | `files`  |                           |
 
 
 ```http
