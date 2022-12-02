@@ -66,7 +66,7 @@ Repository yang berisi tentang kebutuhan untuk implementasi API dari aplikasi.
 | :------------ | :------- | :--------------------- |
 | `name`        | `string` | Admin berhasil dibuat  |
 | `email`       | `string` |                        |
-| `password`    | `string` | Admin berhasil dibuat  |
+| `password`    | `string` |                        |
 | `image`       | `files`  |                        |
 
 
@@ -619,7 +619,7 @@ Repository yang berisi tentang kebutuhan untuk implementasi API dari aplikasi.
 | :------------ | :------- | :------------------------ |
 | `name`        | `string` | User berhasil ditambahkan |
 | `email`       | `string` |                           |
-| `password`    | `string` | Admin berhasil dibuat  |
+| `password`    | `string` |                           |
 | `image`       | `files`  |                           |
 
 
