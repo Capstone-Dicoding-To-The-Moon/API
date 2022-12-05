@@ -59,6 +59,10 @@ const saveImage = (file, path) => {
 };
 
 const helperDeleteImage = (path) => {
+  if (path.includes('default')) {
+    return 0;
+  }
+
   fs.unlink('./public/images/' + path, function (err) {
     if (err && err.code == 'ENOENT') {
       // File doens't exist

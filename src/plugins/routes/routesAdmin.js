@@ -7,6 +7,7 @@ const {
   getImage,
   adminLogin,
 } = require('../handlers/adminHandlers');
+const { getUserDetail } = require('../handlers/userHandlers');
 const {
   routesHelper,
   routesHelperStream,
@@ -17,6 +18,7 @@ const {
 const routesAdmin = [
   routesHelper('GET', '/admin', getAllAdmin), // admin
   routesHelper('GET', '/admin/{id}', getAdminById), // admin
+  routesHelper('GET', '/admin/detail', getUserDetail), // admin
   routesHelper('GET', '/admin/image/{name}', getImage), // admin
   routesHelperStream('PUT', '/admin', updateAdmin), // admin
   routesHelper('DELETE', '/admin', deleteAdmin), // admin

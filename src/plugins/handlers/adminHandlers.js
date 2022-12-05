@@ -197,6 +197,8 @@ const deleteAdmin = async (request, h) => {
     return response404Handler(h, 'delete', 'admin', 'Email');
   }
 
+  deleteSavedImage(admin.image_large, admin.image_small);
+
   admin = await prisma.user.delete({
     where: {
       email,

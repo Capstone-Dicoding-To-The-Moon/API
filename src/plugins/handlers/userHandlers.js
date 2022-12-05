@@ -57,6 +57,28 @@ const getUserById = async (request, h) => {
   return response404Handler(h, 'get', 'user', 'Id');
 };
 
+const getUserDetail = async (request, h) => {
+  const { userId: id } = request.auth.credentials;
+  const { prisma } = request.server.app;
+
+  const requesterUser = await userChecker(prisma, h, id, 'get');
+  if (requesterUser.error) {
+    return requesterUser.dataError;
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  if (user) {
+    return response200Handler(h, 'get', user);
+  }
+
+  return response404Handler(h, 'get', 'user', 'Id');
+};
+
 const addUser = async (request, h) => {
   const { prisma } = request.server.app;
   const { name, email, password, image } = request.payload;
@@ -191,9 +213,13 @@ const deleteUser = async (request, h) => {
     return response404Handler(h, 'delete', 'user', 'Email');
   }
 
-  if (requesterUser.roleId != 1 || requesterUser.id !== user.id) {
-    return response401Handler(h, 'role');
+  console.log(user);
+
+  if (requesterUser.data.roleId != 1 && requesterUser.data.id !== user.id) {
+    return response401Handler(h, 'user account');
   }
+
+  deleteSavedImage(user.image_large, user.image_small);
 
   user = await prisma.user.delete({
     where: {
@@ -250,6 +276,7 @@ const userLogin = async (request, h) => {
 module.exports = {
   getUser,
   getUserById,
+  getUserDetail,
   updateUser,
   deleteUser,
   addUser,
