@@ -5,6 +5,7 @@ const {
   response401Handler,
   response404Handler,
 } = require('../helpers/responseHelper');
+const { userChecker } = require('../helpers/usersChecker');
 
 const getKomentarPost = async (request, h) => {
   const { prisma } = request.server.app;
@@ -125,7 +126,9 @@ const addKomentarPost = async (request, h) => {
     return requesterUser.dataError;
   }
 
-  const { content, postId } = request.payload;
+  const { content } = request.payload;
+
+  const postId = parseInt(request.payload.postId, 10);
 
   if (!content) {
     return response400Handler(h, 'add', 'komentar post', 'content');
