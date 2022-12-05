@@ -93,7 +93,7 @@ const addAdmin = async (request, h) => {
   }
 
   if (validateImageExtension(image)) {
-    if (image.hapi.filename) {
+    if (image?.hapi?.filename) {
       dataImage = await saveImage(image, 'user');
     }
   } else {
@@ -149,7 +149,7 @@ const updateAdmin = async (request, h) => {
   let image_large = adminNow.image_large;
   let image_small = adminNow.image_small;
 
-  if (oldImage !== newImage.hapi.filename) {
+  if (oldImage !== newImage?.hapi?.filename) {
     deleteSavedImage(image_large, image_small);
 
     const dataImage = saveImage(newImage, 'user');

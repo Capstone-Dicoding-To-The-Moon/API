@@ -261,7 +261,7 @@ const updateForum = async (request, h) => {
   let image_large = forumNow.image_large;
   let image_small = forumNow.image_small;
 
-  if (oldImage !== newImage.hapi.filename) {
+  if (oldImage !== newImage?.hapi?.filename) {
     deleteSavedImage(image_large, image_small);
 
     const dataImage = saveImage(newImage, 'forum');
@@ -404,7 +404,7 @@ const addForum = async (request, h) => {
   }
 
   if (validateImageExtension(image)) {
-    if (image.hapi.filename) {
+    if (image?.hapi?.filename) {
       dataImage = await saveImage(image, 'forum');
     }
   } else {
@@ -417,6 +417,13 @@ const addForum = async (request, h) => {
       authorId: requesterUser.data.id,
       image_large: dataImage?.data.large,
       image_small: dataImage?.data.small,
+    },
+  });
+
+  await prisma.kategoriForum.create({
+    data: {
+      forumId: createdForum.id,
+      kategoriId,
     },
   });
 

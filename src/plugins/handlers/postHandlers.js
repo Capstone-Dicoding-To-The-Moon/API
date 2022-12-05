@@ -11,6 +11,7 @@ const {
   deleteSavedImage,
   saveImage,
 } = require('../helpers/saveImageHelper');
+const { userChecker } = require('../helpers/usersChecker');
 
 const helper = (data) => {
   for (let i = 0; i < data.length; i++) {
@@ -262,7 +263,7 @@ const updatePost = async (request, h) => {
   let image_large = postNow.image_large;
   let image_small = postNow.image_small;
 
-  if (oldImage !== newImage.hapi.filename) {
+  if (oldImage !== newImage?.hapi?.filename) {
     deleteSavedImage(image_large, image_small);
 
     const dataImage = saveImage(newImage, 'post');
@@ -397,7 +398,7 @@ const addPost = async (request, h) => {
     return requesterUser.dataError;
   }
 
-  const { title, content, image } = request.payload;
+  const { title, content, image, kategoriId } = request.payload;
 
   let dataImage;
 
@@ -410,7 +411,7 @@ const addPost = async (request, h) => {
   }
 
   if (validateImageExtension(image)) {
-    if (image.hapi.filename) {
+    if (image?.hapi?.filename) {
       dataImage = await saveImage(image, 'post');
     }
   } else {
@@ -424,6 +425,15 @@ const addPost = async (request, h) => {
       authorId: requesterUser.data.id,
       image_large: dataImage?.data.large,
       image_small: dataImage?.data.small,
+    },
+  });
+
+  // console.log(createdPost.id);
+
+  createdKategoriPost = await prisma.kategoriPost.create({
+    data: {
+      postId: createdPost.id,
+      kategoriId,
     },
   });
 

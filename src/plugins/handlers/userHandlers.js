@@ -37,12 +37,11 @@ const getUser = async (request, h) => {
 };
 
 const getUserById = async (request, h) => {
-  const { userId: id } = request.auth.credentials;
   const { prisma } = request.server.app;
+  const { id } = request.params;
 
-  const requesterUser = await adminChecker(prisma, h, id, 'get');
-  if (requesterUser.error) {
-    return requesterUser.dataError;
+  if (!id) {
+    return response400Handler(h, 'get', 'user', 'id');
   }
 
   const user = await prisma.user.findUnique({
@@ -167,7 +166,7 @@ const updateUser = async (request, h) => {
   let image_large = userNow.image_large;
   let image_small = userNow.image_small;
 
-  if (oldImage !== newImage.hapi.filename) {
+  if (oldImage !== newImage?.hapi?.filename) {
     deleteSavedImage(image_large, image_small);
 
     const dataImage = saveImage(newImage, 'user');
