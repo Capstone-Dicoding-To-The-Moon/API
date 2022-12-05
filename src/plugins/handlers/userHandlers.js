@@ -37,12 +37,11 @@ const getUser = async (request, h) => {
 };
 
 const getUserById = async (request, h) => {
-  const { userId: id } = request.auth.credentials;
   const { prisma } = request.server.app;
-  
-  const requesterUser = await userChecker(prisma, h, id, 'get');
-  if (requesterUser.error) {
-    return requesterUser.dataError;
+  const { id } = request.params;
+
+  if (!id) {
+    return response400Handler(h, 'get', 'user', 'id');
   }
 
   const user = await prisma.user.findUnique({
