@@ -398,7 +398,8 @@ const addPost = async (request, h) => {
     return requesterUser.dataError;
   }
 
-  const { title, content, image, kategoriId } = request.payload;
+  const { title, content, image } = request.payload;
+  const kategoriId = parseInt(request.payload.kategoriId, 10);
 
   let dataImage;
 
@@ -430,7 +431,7 @@ const addPost = async (request, h) => {
 
   // console.log(createdPost.id);
 
-  createdKategoriPost = await prisma.kategoriPost.create({
+  await prisma.kategoriPost.create({
     data: {
       postId: createdPost.id,
       kategoriId,

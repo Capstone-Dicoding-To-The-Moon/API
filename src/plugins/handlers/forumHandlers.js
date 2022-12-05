@@ -396,6 +396,7 @@ const addForum = async (request, h) => {
   }
 
   const { title, image } = request.payload;
+  const kategoriId = parseInt(request.payload.kategoriId, 10);
 
   let dataImage;
 
