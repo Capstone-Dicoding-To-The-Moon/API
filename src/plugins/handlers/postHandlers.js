@@ -336,22 +336,22 @@ const updateUpVote = async (request, h) => {
     return response400Handler(h, 'update', 'thumbs up post', 'id');
   }
 
-  let { thumbs_up } = await prisma.post.findUnique({
+  let post = await prisma.post.findUnique({
     where: {
       id,
     },
   });
 
-  if (!thumbs_up) {
+  if (!post) {
     return response404Handler(h, 'update', 'thumbs up post', 'Id');
   }
 
-  const post = await prisma.post.update({
+  post = await prisma.post.update({
     where: {
       id,
     },
     data: {
-      thumbs_up: thumbs_up + 1,
+      thumbs_up: post.thumbs_up + 1,
     },
   });
 
@@ -366,22 +366,22 @@ const updateDownVote = async (request, h) => {
     return response400Handler(h, 'update', 'thumbs down post', 'id');
   }
 
-  let { thumbs_down } = await prisma.post.findUnique({
+  let post = await prisma.post.findUnique({
     where: {
       id,
     },
   });
 
-  if (!thumbs_down) {
-    return response404Handler(h, 'update', 'thumbs up forum', 'Id');
+  if (!post) {
+    return response404Handler(h, 'update', 'thumbs down post', 'Id');
   }
 
-  const post = await prisma.post.update({
+  post = await prisma.post.update({
     where: {
       id,
     },
     data: {
-      thumbs_down: thumbs_down + 1,
+      thumbs_down: post.thumbs_down + 1,
     },
   });
 
