@@ -427,7 +427,7 @@ const addForum = async (request, h) => {
     return requesterUser.dataError;
   }
 
-  const { title, image } = request.payload;
+  const { title, content, image } = request.payload;
   const kategoriId = parseInt(request.payload.kategoriId, 10);
 
   let dataImage;
@@ -457,6 +457,14 @@ const addForum = async (request, h) => {
     data: {
       forumId: createdForum.id,
       kategoriId,
+    },
+  });
+
+  await prisma.komentarForum.create({
+    data: {
+      content,
+      authorId: requesterUser.data.id,
+      forumId: createdForum.id,
     },
   });
 
