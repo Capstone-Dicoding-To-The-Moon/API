@@ -36,27 +36,6 @@ const getAllAdmin = async (request, h) => {
   return response200Handler(h, 'get', admin);
 };
 
-const getAdminById = async (request, h) => {
-  const { prisma } = request.server.app;
-  const id = parseInt(request.params.id, 10);
-
-  if (!id) {
-    return response400Handler(h, 'get', 'admin', 'id');
-  }
-
-  const admin = await prisma.user.findUnique({
-    where: {
-      id,
-    },
-  });
-
-  if (admin) {
-    return response200Handler(h, 'get', admin);
-  }
-
-  return response404Handler(h, 'get', 'admin', 'Id');
-};
-
 const addAdmin = async (request, h) => {
   const { userId: id } = request.auth.credentials;
   const { prisma } = request.server.app;
@@ -211,7 +190,7 @@ const deleteAdmin = async (request, h) => {
 // For view image
 const getImage = async (request, h) => {
   const { name } = request.params;
-  return h.file(`./uploads/user/${name}`);
+  return h.file(`./public/images/user/${name}`);
 };
 
 const adminLogin = async (request, h) => {
@@ -253,7 +232,6 @@ const adminLogin = async (request, h) => {
 
 module.exports = {
   getAllAdmin,
-  getAdminById,
   updateAdmin,
   deleteAdmin,
   addAdmin,

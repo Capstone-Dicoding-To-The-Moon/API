@@ -10,6 +10,7 @@ const {
   updateDownVote,
   getPostById,
   getSearchPostByTitle,
+  getImage,
 } = require('../handlers/postHandlers');
 const {
   routesHelper,
@@ -24,6 +25,7 @@ const routesPost = [
   routesHelperWithoutAuth('GET', '/postsCat/{id}', getPostByCategories), // everyone
   routesHelperWithoutAuth('GET', '/postsCom/{id}', getPostWithCommentById), // everyone
   routesHelperWithoutAuth('GET', '/search-post/{title}', getSearchPostByTitle), // everyone
+  routesHelperWithoutAuth('GET', '/post/image/{name}', getImage), // everyone
   routesHelperStream('PUT', '/posts', updatePost), // user
   routesHelper('PUT', '/postsUpVote', updateUpVote), // user
   routesHelper('PUT', '/postsDownVote', updateDownVote), // user

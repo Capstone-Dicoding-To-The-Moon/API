@@ -101,6 +101,11 @@ const getPostWithCommentById = async (request, h) => {
           name: true,
         },
       },
+      kategori_post: {
+        select: {
+          kategoriId: true,
+        },
+      },
     },
   });
 
@@ -136,6 +141,30 @@ const getPostWithCommentById = async (request, h) => {
 
   postCommentById[0].komentar = komentar_post;
 
+  let kategoriId = postCommentById[0].kategori_post[0].kategoriId;
+
+  delete postCommentById[0].kategori_post;
+
+  const postWithSameCategories = await prisma.kategori.findUnique({
+    where: {
+      id: kategoriId,
+    },
+    include: {
+      kategori_post: {
+        include: {
+          post: {
+            select: {
+              id: true,
+              title: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  postCommentById[0].kategori = postWithSameCategories;
+
   return response200Handler(h, 'get', postCommentById[0]);
 };
 
@@ -167,6 +196,12 @@ const getPostByCategories = async (request, h) => {
     return response400Handler(h, 'get', 'post', 'id');
   }
 
+  const kategori = await prisma.kategori.findUnique({ where: { id } });
+
+  if (!kategori) {
+    return response404Handler(h, 'get', 'post', 'Id kategori');
+  }
+
   const postByCategories = await prisma.post.findMany({
     where: {
       kategori_post: {
@@ -183,10 +218,6 @@ const getPostByCategories = async (request, h) => {
       },
     },
   });
-
-  if (postByCategories.length < 1) {
-    return response404Handler(h, 'get', 'post', 'Id');
-  }
 
   helper(postByCategories);
 
@@ -218,6 +249,8 @@ const getSearchPostByTitle = async (request, h) => {
       },
     },
   });
+
+  helper(posts);
 
   return response200Handler(h, 'get', posts);
 };
@@ -441,6 +474,12 @@ const addPost = async (request, h) => {
   return response201Handler(h, 'post', createdPost);
 };
 
+// For view image
+const getImage = async (request, h) => {
+  const { name } = request.params;
+  return h.file(`./public/images/post/${name}`);
+};
+
 module.exports = {
   getAllPost,
   getPostById,
@@ -453,4 +492,5 @@ module.exports = {
   updateDownVote,
   deletePostById,
   addPost,
+  getImage,
 };

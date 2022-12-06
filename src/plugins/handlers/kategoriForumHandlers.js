@@ -13,15 +13,36 @@ const getKategoriForum = async (request, h) => {
 
 const getKategoriForumById = async (request, h) => {
   const { prisma } = request.server.app;
-  const { id } = request.params;
+  const id = parseInt(request.params.id, 10);
 
   if (!id) {
     return response400Handler(h, 'get', 'kategori forum', 'id');
   }
 
-  const kategoriForumById = await prisma.kategoriForum.findUnique({
+  // const kategoriForumById = await prisma.KategoriForum.findUnique({
+  //   where: {
+  //     forumId_kategoriId: {
+  //       forumId: 1,
+  //       kategoriId: 1,
+  //     },
+  //   },
+  // });
+
+  const kategoriForumById = await prisma.kategori.findUnique({
     where: {
-      id: parseInt(id),
+      id,
+    },
+    include: {
+      kategori_forum: {
+        include: {
+          forum: {
+            select: {
+              id: true,
+              title: true,
+            },
+          },
+        },
+      },
     },
   });
 

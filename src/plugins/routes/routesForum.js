@@ -10,6 +10,7 @@ const {
   updateDownVote,
   deleteForumById,
   getSearchForumByTitle,
+  getImage,
 } = require('../handlers/forumHandlers');
 const {
   routesHelper,
@@ -28,6 +29,7 @@ const routesForum = [
     '/search-forum/{title}',
     getSearchForumByTitle,
   ), // everyone
+  routesHelperWithoutAuth('GET', '/forum/image/{name}', getImage), // everyone
   routesHelperStream('PUT', '/forum', updateForum), // user
   routesHelper('PUT', '/forumUpVote', updateUpVote), // user
   routesHelper('PUT', '/forumDownVote', updateDownVote), // user

@@ -18,6 +18,7 @@ const {
 } = require('../helpers/saveImageHelper');
 const { adminChecker, userChecker } = require('../helpers/usersChecker');
 
+// Maksudnya getAllUser
 const getUser = async (request, h) => {
   const { userId: id } = request.auth.credentials;
   const { prisma } = request.server.app;
@@ -37,7 +38,14 @@ const getUser = async (request, h) => {
 };
 
 const getUserById = async (request, h) => {
+  const { userId: uId } = request.auth.credentials;
   const { prisma } = request.server.app;
+
+  const requesterUser = await adminChecker(prisma, h, uId, 'get');
+  if (requesterUser.error) {
+    return requesterUser.dataError;
+  }
+
   const { id } = request.params;
 
   if (!id) {
@@ -159,7 +167,7 @@ const updateUser = async (request, h) => {
     return response404Handler(h, 'update', 'user', 'Email');
   }
 
-  if (requesterUser.data.roleId != 1 || userNow.id === requesterUser.data.id) {
+  if (requesterUser.data.roleId != 1 && userNow.id === requesterUser.data.id) {
     return response401Handler(h, 'user request');
   }
 
@@ -213,8 +221,6 @@ const deleteUser = async (request, h) => {
     return response404Handler(h, 'delete', 'user', 'Email');
   }
 
-  console.log(user);
-
   if (requesterUser.data.roleId != 1 && requesterUser.data.id !== user.id) {
     return response401Handler(h, 'user account');
   }
@@ -233,7 +239,7 @@ const deleteUser = async (request, h) => {
 // For view image
 const getImage = async (request, h) => {
   const { name } = request.params;
-  return h.file(`./uploads/user/${name}`);
+  return h.file(`./public/images/user/${name}`);
 };
 
 const userLogin = async (request, h) => {

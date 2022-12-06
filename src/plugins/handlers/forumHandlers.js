@@ -111,6 +111,12 @@ const getForumByCategories = async (request, h) => {
     return response400Handler(h, 'get', 'forum', 'id');
   }
 
+  const kategori = await prisma.kategori.findUnique({ where: { id } });
+
+  if (!kategori) {
+    return response404Handler(h, 'get', 'forum', 'Id kategori');
+  }
+
   const forumByCategories = await prisma.forum.findMany({
     where: {
       kategori_forum: {
@@ -128,10 +134,6 @@ const getForumByCategories = async (request, h) => {
       kategori_forum: true,
     },
   });
-
-  if (forumByCategories.length < 1) {
-    return response404Handler(h, 'get', 'forum', 'Id');
-  }
 
   helper(forumByCategories);
 
@@ -155,6 +157,11 @@ const getForumWithDiscussionById = async (request, h) => {
       user: {
         select: {
           name: true,
+        },
+      },
+      kategori_forum: {
+        select: {
+          kategoriId: true,
         },
       },
     },
@@ -192,16 +199,36 @@ const getForumWithDiscussionById = async (request, h) => {
 
   forumWithKomentar[0].komentar = komentar;
 
+  let kategoriId = forumWithKomentar[0].kategori_forum[0].kategoriId;
+
+  delete forumWithKomentar[0].kategori_forum;
+
+  const forumWithSameCategories = await prisma.kategori.findUnique({
+    where: {
+      id: kategoriId,
+    },
+    include: {
+      kategori_forum: {
+        include: {
+          forum: {
+            select: {
+              id: true,
+              title: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  forumWithKomentar[0].kategori = forumWithSameCategories;
+
   return response200Handler(h, 'get', forumWithKomentar[0]);
 };
 
 const getSearchForumByTitle = async (request, h) => {
   const { prisma } = request.server.app;
   const { title } = request.params;
-
-  if (title === null) {
-    return response400Handler(h, 'get', 'forum', 'title, tidak boleh null');
-  }
 
   const forum = await prisma.forum.findMany({
     where: {
@@ -220,6 +247,8 @@ const getSearchForumByTitle = async (request, h) => {
       },
     },
   });
+
+  helper(forum);
 
   return response200Handler(h, 'get', forum);
 };
@@ -373,7 +402,10 @@ const deleteForumById = async (request, h) => {
     return response404Handler(h, 'delete', 'forum', 'Id');
   }
 
-  if (deletedForum.authorId != requesterUser.data.id) {
+  if (
+    deletedForum.authorId != requesterUser.data.id &&
+    requesterUser.data.roleId != 1
+  ) {
     return response401Handler(h, 'author forum');
   }
 
@@ -431,6 +463,12 @@ const addForum = async (request, h) => {
   return response201Handler(h, 'forum', createdForum);
 };
 
+// For view image
+const getImage = async (request, h) => {
+  const { name } = request.params;
+  return h.file(`./public/images/forum/${name}`);
+};
+
 module.exports = {
   getAllForum,
   getForumById,
@@ -443,4 +481,5 @@ module.exports = {
   updateDownVote,
   deleteForumById,
   addForum,
+  getImage,
 };

@@ -1,13 +1,12 @@
 const {
   addAdmin,
   getAllAdmin,
-  getAdminById,
   updateAdmin,
   deleteAdmin,
   getImage,
   adminLogin,
 } = require('../handlers/adminHandlers');
-const { getUserDetail } = require('../handlers/userHandlers');
+const { getUserDetail, getUserById } = require('../handlers/userHandlers');
 const {
   routesHelper,
   routesHelperStream,
@@ -17,9 +16,9 @@ const {
 // Cuma bisa diliat admin
 const routesAdmin = [
   routesHelper('GET', '/admin', getAllAdmin), // admin
-  routesHelper('GET', '/admin/{id}', getAdminById), // admin
+  routesHelper('GET', '/admin/{id}', getUserById), // admin
   routesHelper('GET', '/admin/detail', getUserDetail), // admin
-  routesHelper('GET', '/admin/image/{name}', getImage), // admin
+  routesHelperWithoutAuth('GET', '/admin/image/{name}', getImage), // everyone
   routesHelperStream('PUT', '/admin', updateAdmin), // admin
   routesHelper('DELETE', '/admin', deleteAdmin), // admin
   routesHelperStream('POST', '/admin', addAdmin), // admin
