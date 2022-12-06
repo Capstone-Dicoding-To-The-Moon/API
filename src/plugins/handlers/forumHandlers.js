@@ -19,6 +19,12 @@ const helper = (data) => {
       data[i].author = data[i].user.name;
       delete data[i].user;
     }
+
+    if (data[i]['_count']) {
+      data[i].total_komentar = data[i]['_count'].komentar_forum;
+      delete data[i]['_count'];
+    }
+
     data[i].vote = data[i].thumbs_up - data[i].thumbs_down;
 
     delete data[i].thumbs_up;
@@ -28,6 +34,7 @@ const helper = (data) => {
 
 const getAllForum = async (request, h) => {
   const { prisma } = request.server.app;
+
   const forum = await prisma.forum.findMany({
     orderBy: [
       {
@@ -41,6 +48,11 @@ const getAllForum = async (request, h) => {
       user: {
         select: {
           name: true,
+        },
+      },
+      _count: {
+        select: {
+          komentar_forum: true,
         },
       },
     },
