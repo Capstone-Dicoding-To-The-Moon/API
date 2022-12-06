@@ -177,14 +177,6 @@ const getForumWithDiscussionById = async (request, h) => {
     where: {
       forumId: id,
     },
-    orderBy: [
-      {
-        thumbs_up: 'desc',
-      },
-      {
-        thumbs_down: 'asc',
-      },
-    ],
     include: {
       user: {
         select: {
