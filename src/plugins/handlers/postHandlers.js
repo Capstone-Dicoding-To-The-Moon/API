@@ -41,6 +41,7 @@ const getAllPost = async (request, h) => {
       user: {
         select: {
           name: true,
+          email: true,
         },
       },
     },
@@ -99,6 +100,7 @@ const getPostWithCommentById = async (request, h) => {
       user: {
         select: {
           name: true,
+          email: true,
         },
       },
       kategori_post: {
