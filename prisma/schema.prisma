@@ -66,6 +66,7 @@ model KategoriForum {
 model forum {
   id             Int             @id @default(autoincrement())
   title          String          @db.VarChar(100)
+  content        String          @db.Text
   authorId       Int
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @default(now())
@@ -131,7 +132,7 @@ model role {
 model user {
   id             Int             @id @default(autoincrement())
   email          String          @unique(map: "User_email_key")
-  password       String          @default("password123456") @db.VarChar(255)
+  password       String          @default("$2b$04$0nhjNgDyygoOuIaFCVKN1O1ufFMgbZ45rUHYZfkq.OTbApzbuMFeC") @db.VarChar(255)
   name           String          @db.VarChar(50)
   roleId         Int
   createdAt      DateTime        @default(now())

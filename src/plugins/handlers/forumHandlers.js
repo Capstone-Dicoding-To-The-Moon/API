@@ -50,6 +50,15 @@ const getAllForum = async (request, h) => {
           name: true,
         },
       },
+      kategori_forum: {
+        select: {
+          kategori: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      },
       _count: {
         select: {
           komentar_forum: true,
@@ -440,6 +449,10 @@ const addForum = async (request, h) => {
     return response400Handler(h, 'add', 'forum', 'title');
   }
 
+  if (!content) {
+    return response400Handler(h, 'add', 'forum', 'content');
+  }
+
   if (validateImageExtension(image)) {
     if (image?.hapi?.filename) {
       dataImage = await saveImage(image, 'forum');
@@ -451,6 +464,7 @@ const addForum = async (request, h) => {
   const createdForum = await prisma.forum.create({
     data: {
       title,
+      content,
       authorId: requesterUser.data.id,
       image_large: dataImage?.data.large,
       image_small: dataImage?.data.small,
@@ -461,14 +475,6 @@ const addForum = async (request, h) => {
     data: {
       forumId: createdForum.id,
       kategoriId,
-    },
-  });
-
-  await prisma.komentarForum.create({
-    data: {
-      content,
-      authorId: requesterUser.data.id,
-      forumId: createdForum.id,
     },
   });
 
