@@ -81,6 +81,66 @@ const updateKomentarForum = async (request, h) => {
   return response200Handler(h, 'update', updatedKomentarForum);
 };
 
+const updateUpVoteKomentarForum = async (request, h) => {
+  const { prisma } = request.server.app;
+  const id = parseInt(request.payload.id, 10);
+
+  if (!id) {
+    return response400Handler(h, 'update', 'thumbs up komentar forum', 'id');
+  }
+
+  let komentarForum = await prisma.komentarForum.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!komentarForum) {
+    return response404Handler(h, 'update', 'thumbs up komentar forum', 'Id');
+  }
+
+  komentarForum = await prisma.komentarForum.update({
+    where: {
+      id,
+    },
+    data: {
+      thumbs_up: komentarForum.thumbs_up + 1,
+    },
+  });
+
+  return response200Handler(h, 'update', komentarForum);
+};
+
+const updateDownVoteKomentarForum = async (request, h) => {
+  const { prisma } = request.server.app;
+  const id = parseInt(request.payload.id, 10);
+
+  if (!id) {
+    return response400Handler(h, 'update', 'thumbs down komentar forum', 'id');
+  }
+
+  let komentarForum = await prisma.komentarForum.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!komentarForum) {
+    return response404Handler(h, 'update', 'thumbs down komentar forum', 'Id');
+  }
+
+  komentarForum = await prisma.komentarForum.update({
+    where: {
+      id,
+    },
+    data: {
+      thumbs_down: komentarForum.thumbs_down + 1,
+    },
+  });
+
+  return response200Handler(h, 'update', komentarForum);
+};
+
 const deleteKomentarForum = async (request, h) => {
   const { userId: uId } = request.auth.credentials;
   const { prisma } = request.server.app;
@@ -151,6 +211,8 @@ module.exports = {
   getKomentarForum,
   getKomentarForumById,
   updateKomentarForum,
+  updateUpVoteKomentarForum,
+  updateDownVoteKomentarForum,
   deleteKomentarForum,
   addKomentarForum,
 };
