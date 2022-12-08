@@ -15,7 +15,7 @@ const { userChecker } = require('../helpers/usersChecker');
 
 const helper = (data) => {
   for (let i = 0; i < data.length; i++) {
-    if (data[i].user) {
+    if (!data[i].user.email) {
       data[i].author = data[i].user.name;
       delete data[i].user;
     }
