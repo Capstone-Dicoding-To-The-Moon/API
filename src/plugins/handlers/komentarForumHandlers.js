@@ -9,7 +9,16 @@ const { userChecker } = require('../helpers/usersChecker');
 
 const getKomentarForum = async (request, h) => {
   const { prisma } = request.server.app;
-  const komentarForum = await prisma.komentarForum.findMany({});
+  const komentarForum = await prisma.komentarForum.findMany({
+    orderBy: [
+      {
+        thumbs_up: 'desc',
+      },
+      {
+        thumbs_down: 'asc',
+      },
+    ],
+  });
   return response200Handler(h, 'get', komentarForum);
 };
 

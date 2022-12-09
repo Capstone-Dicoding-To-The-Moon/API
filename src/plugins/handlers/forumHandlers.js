@@ -200,6 +200,14 @@ const getForumWithDiscussionById = async (request, h) => {
     where: {
       forumId: id,
     },
+    orderBy: [
+      {
+        thumbs_up: 'desc',
+      },
+      {
+        thumbs_down: 'asc',
+      },
+    ],
     include: {
       user: {
         select: {
@@ -258,6 +266,21 @@ const getSearchForumByTitle = async (request, h) => {
       user: {
         select: {
           name: true,
+          email: true,
+        },
+      },
+      kategori_forum: {
+        select: {
+          kategori: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      },
+      _count: {
+        select: {
+          komentar_forum: true,
         },
       },
     },
