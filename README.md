@@ -1,7 +1,8 @@
 # API
-Repository yang berisi tentang kebutuhan untuk implementasi API dari aplikasi.
+Repository yang berisi tentang kebutuhan untuk implementasi API dari aplikasi.<br>
+Link API : <a href="https://familypreparation.up.railway.app">API </a> (berlaku sampai 28 Desember 2022)
 
-### **Admin**
+## **Admin**
 #### GET
 
 ```http
