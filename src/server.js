@@ -11,7 +11,9 @@ const init = async () => {
     port: process.env.PORT || 5000,
     host: process.env.HOST || '0.0.0.0',
     routes: {
-      cors: true
+      cors: {
+        origin: ['*'],
+      },
     },
   });
 

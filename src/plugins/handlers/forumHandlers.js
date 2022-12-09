@@ -441,8 +441,8 @@ const deleteForumById = async (request, h) => {
   }
 
   if (
-    deletedForum.authorId != requesterUser.data.id &&
-    requesterUser.data.roleId != 1
+    requesterUser.data.roleId != 1 &&
+    deletedForum.authorId != requesterUser.data.id
   ) {
     return response401Handler(h, 'author forum');
   }

@@ -411,7 +411,7 @@ const deletePostById = async (request, h) => {
     return response404Handler(h, 'delete', 'post', 'Id');
   }
 
-  if (deletedPost.authorId != requesterUser.data.id) {
+  if (requester.data.roleId != 1 && deletedPost.authorId != requesterUser.data.id) {
     return response401Handler(h, 'author post');
   }
 
