@@ -75,7 +75,7 @@ const getPostById = async (request, h) => {
     }),
   ];
 
-  if (!postById) {
+  if (!postById[0]) {
     return response404Handler(h, 'get', 'post', 'Id');
   }
 

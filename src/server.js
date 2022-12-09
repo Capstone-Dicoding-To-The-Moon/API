@@ -12,7 +12,7 @@ const init = async () => {
     host: process.env.HOST || '0.0.0.0',
     routes: {
       cors: {
-        origin: ['*'],
+        origin: '*',
       },
     },
   });
