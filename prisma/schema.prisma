@@ -137,8 +137,8 @@ model user {
   roleId         Int
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @default(now())
-  image_large    String          @default("user/default-large.jpg") @db.VarChar(100)
-  image_small    String          @default("user/default-small.jpg") @db.VarChar(100)
+  image_large    String          @default("user/default-large.png") @db.VarChar(100)
+  image_small    String          @default("user/default-small.png") @db.VarChar(100)
   role           role            @relation(fields: [roleId], references: [id], onDelete: Cascade, map: "User_roleId_fkey")
   forum          forum[]
   kategori       kategori[]
